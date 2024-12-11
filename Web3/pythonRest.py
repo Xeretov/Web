@@ -1,24 +1,31 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 import psycopg2
 from psycopg2 import sql
 
 #Flask api
-app = Flask(__name__, template_folder='./')
+app = Flask(__name__, template_folder='./templates')
 
 #Flask index
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
+    return render_template('index.html')
+
+@app.route('/query', methods=['POST'])
+def query():
     results = []
-    if request.method == 'POST':
-        query = request.form['query']
-        conn = get_db_connection()
-        try:
-            results = conn.execute(sql.SQL(query)).fetchall()
-        except Exception as e:
-            results = [{'error':str(e)}]
-        finally:
-            conn.close()
-    return render_template('index.html', results=results)
+    query = request.json.get('query')
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute(sql.SQL(query))
+            results = cursor.fetchall()
+            columns = [desc[0] for desc in cursor.description]
+            results = [dict(zip(columns, row)) for row in results]
+    except Exception as e:
+        results = [{'error':str(e)}]
+    finally:
+        conn.close()
+    return jsonify(results)
 
 #DB connection
 def get_db_connection():

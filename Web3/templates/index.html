@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flask Query Example</title>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link rel="stylesheet" href="../static/css/index.css" type="text/css">
+    </head>
+    <body>
+        <h1>Database Query</h1>
+        <form id="queryForm">
+            <div class="form-group">
+                <label for="query">Enter SQL Query:</label><br/>
+                <textarea class="form-control" id="query" name="query" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        <h2>Results</h2>
+        <table class="table table-bordered" id="resultsTable">
+            <thead>
+                <tr id="tableHeader"></tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+
+        <script>
+            $(document).ready(function() {
+                $('#queryForm').on('submit', function(event) {
+                    event.preventDefault();
+                    const query = $('#query').val();
+                    $.ajax({
+                        url: '/query',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({ query: query }),
+                        success: function(data) {
+                            $('#tableHeader').empty();
+                            $('#tableBody').empty();
+                            if (data.length > 0 && !data[0].error) {
+                                const columns = Object.keys(data[0]);
+                                columns.forEach(column => {
+                                    $('#tableHeader').append(`<th>${column}</th>`);
+                                });
+                                data.forEach(row => {
+                                    const rowElement = $('<tr></tr>');
+                                    columns.forEach(column => {
+                                        rowElement.append(`<td>${row[column]}</td>`);
+                                    });
+                                    $('#tableBody').append(rowElement);
+                                });
+                            } else {
+                                $('#tableBody').append('<tr><td colspan="100%">No results found or an error occurred.</td></tr>');
+                            }
+                        },
+                        error: function() {
+                            $('#tableHeader').empty();
+                            $('#tableBody').empty();
+                            $('#tableBody').append('<tr><td colspan="100%">An error occurred while processing your request.</td></tr>');
+                        }
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
