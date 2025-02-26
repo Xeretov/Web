@@ -12,3 +12,8 @@ Dentro cartella:
 npm install
 npm run dev
 ```
+
+```bash
+pip install flask
+pip install flask_cors
+```
