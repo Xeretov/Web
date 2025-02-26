@@ -1,19 +1,15 @@
 from flask import Flask, jsonify, render_template, request
+from flask_cors import CORS
 import psycopg2
 from psycopg2 import sql
 
-#Flask api
-app = Flask(__name__, template_folder='./templates')
+app = Flask(__name__)
+CORS(app)
 
-#Flask index
-@app.route('/', methods=['GET'])
-def index():
-    return render_template('index.html')
-
-@app.route('/query', methods=['POST'])
-def query():
+@app.route('/queries', methods=['GET'])
+def get_queries():
     results = []
-    query = request.json.get('query')
+    query = 'select * from persona'
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:
@@ -27,7 +23,6 @@ def query():
         conn.close()
     return jsonify(results)
 
-#DB connection
 def get_db_connection():
     conn = psycopg2.connect(
         host="localhost",
@@ -37,7 +32,5 @@ def get_db_connection():
     )
     return conn
 
-
-    
-if __name__ == '__main__':
-    app.run(debug=True, port=8080)
+if __name__ == "__main__":
+    app.run(debug=True, port=8085)

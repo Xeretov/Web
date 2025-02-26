@@ -1,0 +1,35 @@
+import axios from 'axios';
+
+const API_BASE_URL = 'https://jsonplaceholder.typicode.com';
+const API_FLASK = 'http://localhost:8085';
+
+export const fetchUsers = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/users`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return [];
+  }
+};
+
+export const fetchPosts = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/posts`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    return [];
+  }
+};
+
+export const fetchQueries = async() => {
+  try {
+    const response = await axios.get(`${API_FLASK}/queries`);
+    console.error('check:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching queries:', error);
+    return [];
+  }
+};
