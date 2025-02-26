@@ -2,10 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import CustomNavbar from './components/Navbar';
 import Home from './components/Home';
-import Users from './components/Users';
-import Posts from './components/Posts';
 import About from './components/About';
-import Queries from './components/Queries';
+import Employees from './components/Employees';
+import './App.css'
 
 const App = () => {
   return (
@@ -13,9 +12,7 @@ const App = () => {
       <CustomNavbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/posts" element={<Posts />} />
-        <Route path="/queries" element={<Queries />} />
+        <Route path="/employees" element={<Employees />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>

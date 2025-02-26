@@ -23,13 +23,15 @@ export const fetchPosts = async () => {
   }
 };
 
-export const fetchQueries = async() => {
+export const fetchEmployees = async () => {
   try {
-    const response = await axios.get(`${API_FLASK}/queries`);
-    console.error('check:', response.data);
-    return response.data;
+      const response = await fetch(`${API_FLASK}/employees`);
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return await response.json();
   } catch (error) {
-    console.error('Error fetching queries:', error);
-    return [];
+      console.error('Fetch error: ', error);
+      return [];
   }
 };
