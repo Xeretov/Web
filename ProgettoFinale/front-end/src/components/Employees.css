@@ -18,6 +18,11 @@
     background-color: #0056b3;
 }
 
+.form-control {
+    width: 300px;
+    margin: 0 auto;
+}
+
 @media (max-width: 449px) {
     .employees-table h1 {
         font-size: 1rem;

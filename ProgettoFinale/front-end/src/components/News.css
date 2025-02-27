@@ -1,0 +1,42 @@
+.news-page {
+    background-color: #f9f9f9;
+    padding: 40px 0;
+}
+
+.news-card {
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-card .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.news-card .card-subtitle {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.news-card .card-text {
+    font-size: 1rem;
+    color: #333;
+}
+
+.news-card .btn {
+    margin-top: 10px;
+    width: 100%;
+}
+
+.news-page h2 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .news-page h2 {
+        font-size: 1.75rem;
+    }
+}
+  

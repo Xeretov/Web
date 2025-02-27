@@ -105,9 +105,9 @@ const HomePage = () => {
             <Row className="my-5">
                 <Col md={12}>
                     <h2 className="text-center mb-4">What Our Clients Say</h2>
-                    <Carousel>
+                    <Carousel controls={false}>
                         {testimonials.map((testimonial, index) => (
-                            <Carousel.Item key={index}>
+                            <Carousel.Item key={index} interval={3000}>
                                 <div className="d-flex justify-content-center">
                                     <div className="testimonial-card">
                                         <p className="testimonial-text">"{testimonial.testimonial}"</p>
